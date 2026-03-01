@@ -1,7 +1,3 @@
-## Why
-
-Every AI tool generates the same website: purple gradient, Inter font, rounded everything, three-column layout. They all trained on the same data, so they all converge on the same aesthetic. This skill breaks that pattern by giving Claude specific design tokens for 8 different industries — a fintech dashboard shouldn't look like a meditation app.
-
 # anti-slop-design
 
 Claude Code skill that makes AI stop generating the same looking website every time.
