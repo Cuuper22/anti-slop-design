@@ -1,3 +1,13 @@
+## Why
+
+Every AI tool generates the same website. Purple gradient, Inter font, three equal columns, rounded everything, "Unlock the power of [noun]." It's not a conspiracy — it's distributional convergence. The model predicts the most likely next token, and the most likely design is the average of everything it trained on. The average of a million websites is a very boring website.
+
+Telling the model "be more creative" doesn't fix this. It's a prompt engineering cope. The model doesn't have taste — it has probability distributions. The fix is structured: give it domain-specific design tokens that override the defaults before generation starts.
+
+That's what this skill does. Eight industry domains (fintech, healthcare, devtools, ecommerce, education, media, government, creative), each with a full token set — OKLCH color palettes, typography stacks, spacing scales, border radius, motion curves, texture preferences. A fintech app gets navy and Plus Jakarta Sans and subtle shadows. A healthcare app gets calming teal and breathing whitespace. Same template, different domain, fundamentally different output.
+
+178 validation checks ensure the tokens are structurally correct. An anti-patterns reference catalogs every convergence pattern so you know exactly which defaults to kill. The goal isn't "different for different's sake" — it's domain-appropriate design that doesn't trigger the "this was clearly AI-generated" reflex in the first three seconds.
+
 # anti-slop-design
 
 Claude Code skill that makes AI stop generating the same looking website every time.
