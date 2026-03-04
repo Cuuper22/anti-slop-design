@@ -27,7 +27,7 @@ check_min_lines() {
 }
 
 check_json() {
-  check "Valid JSON: $1" python3 -m json.tool "$SKILL_ROOT/$1"
+  check "Valid JSON: $1" jq empty "$SKILL_ROOT/$1"
 }
 
 check_grep() {
@@ -322,20 +322,7 @@ echo ""
 echo "=== Domain Token Schema Checks ==="
 
 for domain in fintech healthcare devtools ecommerce education media government creative; do
-  check "Schema compliance: $domain.json" python3 -c "
-import json, sys
-with open('$SKILL_ROOT/assets/tokens/domain-tokens/$domain.json') as f:
-    data = json.load(f)
-required = ['domain', 'colors', 'typography', 'shape', 'motion', 'shadows']
-missing = [k for k in required if k not in data]
-if missing:
-    print(f'Missing keys: {missing}')
-    sys.exit(1)
-for mode in ['light', 'dark']:
-    if mode not in data['colors']:
-        print(f'Missing colors.{mode}')
-        sys.exit(1)
-"
+  check "Schema compliance: $domain.json" jq -e 'has("domain") and has("colors") and has("typography") and has("shape") and has("motion") and has("shadows") and (.colors | has("light")) and (.colors | has("dark"))' "$SKILL_ROOT/assets/tokens/domain-tokens/$domain.json" > /dev/null
 done
 
 # =============================================================================
@@ -352,16 +339,7 @@ check "SKILL.md has name: anti-slop-design" bash -c "head -20 '$SKILL_ROOT/SKILL
 echo ""
 echo "=== domain-map.json Structure Check ==="
 
-check "domain-map.json has 8 domains with keywords" python3 -c "
-import json
-with open('$SKILL_ROOT/domain-map.json') as f:
-    data = json.load(f)
-assert len(data['domains']) == 8, f'Expected 8 domains, got {len(data[\"domains\"])}'
-assert 'signal_keywords' in data, 'Missing signal_keywords'
-for domain in data['domains']:
-    assert domain in data['signal_keywords'], f'Missing keywords for {domain}'
-    assert len(data['signal_keywords'][domain]) >= 10, f'{domain} has <10 keywords'
-"
+check "domain-map.json has 8 domains with keywords" jq -e '. as $root | (.domains | length == 8) and ($root | has("signal_keywords")) and (.domains | keys | all(in($root.signal_keywords) and ($root.signal_keywords[.] | length >= 10)))' "$SKILL_ROOT/domain-map.json" > /dev/null
 
 # =============================================================================
 # SUMMARY
