@@ -17,7 +17,7 @@ Claude Code skill that makes AI stop generating the same website.
 ![Files](https://img.shields.io/badge/files-67-blue)
 ![Domains](https://img.shields.io/badge/domains-8-green)
 ![Checks](https://img.shields.io/badge/validation-178%2F178-brightgreen)
-![Platforms](https://img.shields.io/badge/platforms-6-orange)
+![Template families](https://img.shields.io/badge/template_families-6-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ## What it does
@@ -37,7 +37,7 @@ Intercepts design requests and applies **domain-aware tokens** instead of generi
 
 All color palettes use [OKLCH](https://oklch.com/) - a perceptually uniform color space where same numeric distance = same visual distance. A navy-to-white gradient in the fintech palette has the same perceptual smoothness as a teal-to-white gradient in the healthcare palette. HEX and HSL can't guarantee this.
 
-## 67 files across 6 platforms
+## 67 files across 6 template families
 
 ```
 references/       17 docs - platform guides, anti-patterns, accessibility
@@ -47,7 +47,7 @@ scripts/            3 - validation (178 checks), domain-map generator, eval gene
 evals/              1 - 12 test prompts covering all domains × platforms
 ```
 
-Platforms: web, mobile, CLI/TUI, desktop, documents/PDF, dataviz.
+Template families: web, mobile, CLI/TUI, desktop, documents/PDF/email, and dataviz.
 
 Templates span 10+ languages: JSX, TSX, HTML, Kotlin (Jetpack Compose), Swift (SwiftUI), Go (Bubble Tea), TypeScript, Python (Rich), Typst.
 
