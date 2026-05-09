@@ -1,4 +1,14 @@
-## Why
+# anti-slop-design
+
+Claude Code skill that makes AI stop generating the same website.
+
+![Files](https://img.shields.io/badge/files-67-blue)
+![Domains](https://img.shields.io/badge/domains-8-green)
+![Checks](https://img.shields.io/badge/validation-178%2F178-brightgreen)
+![Template families](https://img.shields.io/badge/template_families-6-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+## Why I Built It
 
 Every AI tool generates the same website. Purple gradient, Inter font, three equal columns, rounded everything, generic SaaS headline. It's not a conspiracy - it's distributional convergence. The model predicts the most likely next token, and the most likely design is the average of everything it trained on. The average of a million websites is a very boring website.
 
@@ -10,15 +20,7 @@ That's what this skill does. Eight industry domains (fintech, healthcare, devtoo
 
 I built this after regenerating the same purple gradient portfolio for [Erdos](https://github.com/Cuuper22/Erdos), [ToaruOS-Arnold](https://github.com/Cuuper22/ToaruOS-Arnold), and every other project in this account. The distributional convergence wasn't theoretical - it was my actual portfolio.
 
-# anti-slop-design
-
-Claude Code skill that makes AI stop generating the same website.
-
-![Files](https://img.shields.io/badge/files-67-blue)
-![Domains](https://img.shields.io/badge/domains-8-green)
-![Checks](https://img.shields.io/badge/validation-178%2F178-brightgreen)
-![Template families](https://img.shields.io/badge/template_families-6-orange)
-![License](https://img.shields.io/badge/license-MIT-green)
+What this repo shows about me: I treat taste as something you can operationalize. Not fully automate, not fake, but constrain and test enough that a model has less room to fall back to the average.
 
 ## What it does
 
@@ -73,7 +75,7 @@ The `/* THEME */` markers in templates are where domain tokens get applied - sam
 
 For the complete specification covering every design decision and rationale, see [anti-slop-design-FULL-SPEC.md](anti-slop-design-FULL-SPEC.md) (271KB). That's not a typo - it covers color science, typography theory, spacing philosophy, motion design, accessibility, platform constraints, and domain differentiation rationale for all 8 industries.
 
-## How to inspect it
+## How To Inspect It
 
 If you are evaluating this as AI tooling work, start with the constraint system, not the marketing idea.
 
@@ -82,8 +84,6 @@ If you are evaluating this as AI tooling work, start with the constraint system,
 3. Read `references/anti-patterns.md` to see the failure modes the skill is designed to kill.
 4. Inspect `templates/web/saas-app.tsx`, `templates/web/landing-page.html`, and `templates/mobile/compose-app.kt` to see how tokens become implementation pressure.
 5. Run `bash scripts/validate-skill.sh`. The 178 checks are there because aesthetic systems still need boring structural guarantees.
-
-What this repo shows about me: I treat taste as something you can operationalize. Not fully automate, not fake, but constrain and test enough that a model has less room to fall back to the average.
 
 ## Install
 
