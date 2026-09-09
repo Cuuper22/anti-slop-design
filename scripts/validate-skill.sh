@@ -26,8 +26,15 @@ check_min_lines() {
   check "Min lines ($min): $file" bash -c "[ \$(wc -l < '$SKILL_ROOT/$file') -ge $min ]"
 }
 
-check_json() {
-  check "Valid JSON: $1" python3 -m json.tool "$SKILL_ROOT/$1"
+check_json_files() {
+  check "All JSON files are valid" python3 -c '
+import json, sys
+from pathlib import Path
+root = Path(sys.argv[1])
+for relative_path in sys.argv[2:]:
+    with (root / relative_path).open() as stream:
+        json.load(stream)
+' "$SKILL_ROOT" "$@"
 }
 
 check_grep() {
@@ -158,22 +165,23 @@ check_min_lines "references/layout-spacing.md" 100
 check_min_lines "references/accessibility.md" 150
 
 # =============================================================================
-# CATEGORY 3: JSON VALIDITY (11 checks)
+# CATEGORY 3: JSON VALIDITY (1 batched check)
 # =============================================================================
 echo ""
 echo "=== JSON Validity Checks ==="
 
-check_json "domain-map.json"
-check_json "assets/fonts/font-stacks.json"
-check_json "assets/tokens/domain-tokens/fintech.json"
-check_json "assets/tokens/domain-tokens/healthcare.json"
-check_json "assets/tokens/domain-tokens/devtools.json"
-check_json "assets/tokens/domain-tokens/ecommerce.json"
-check_json "assets/tokens/domain-tokens/education.json"
-check_json "assets/tokens/domain-tokens/media.json"
-check_json "assets/tokens/domain-tokens/government.json"
-check_json "assets/tokens/domain-tokens/creative.json"
-check_json "evals/evals.json"
+check_json_files \
+  "domain-map.json" \
+  "assets/fonts/font-stacks.json" \
+  "assets/tokens/domain-tokens/fintech.json" \
+  "assets/tokens/domain-tokens/healthcare.json" \
+  "assets/tokens/domain-tokens/devtools.json" \
+  "assets/tokens/domain-tokens/ecommerce.json" \
+  "assets/tokens/domain-tokens/education.json" \
+  "assets/tokens/domain-tokens/media.json" \
+  "assets/tokens/domain-tokens/government.json" \
+  "assets/tokens/domain-tokens/creative.json" \
+  "evals/evals.json"
 
 # =============================================================================
 # CATEGORY 4: REQUIRED SECTION HEADERS (variable checks)
@@ -316,27 +324,26 @@ check_grep "templates/dataviz/d3-editorial.html" "theme\|THEME" "d3-editorial.ht
 check_grep "templates/dataviz/nivo-cards.tsx" "theme\|THEME" "nivo-cards.tsx has theme marker"
 
 # =============================================================================
-# CATEGORY 8: DOMAIN TOKEN SCHEMA COMPLIANCE (8 checks)
+# CATEGORY 8: DOMAIN TOKEN SCHEMA COMPLIANCE (1 batched check)
 # =============================================================================
 echo ""
 echo "=== Domain Token Schema Checks ==="
 
-for domain in fintech healthcare devtools ecommerce education media government creative; do
-  check "Schema compliance: $domain.json" python3 -c "
+check "All domain token schemas are valid" python3 -c '
 import json, sys
-with open('$SKILL_ROOT/assets/tokens/domain-tokens/$domain.json') as f:
-    data = json.load(f)
-required = ['domain', 'colors', 'typography', 'shape', 'motion', 'shadows']
-missing = [k for k in required if k not in data]
-if missing:
-    print(f'Missing keys: {missing}')
-    sys.exit(1)
-for mode in ['light', 'dark']:
-    if mode not in data['colors']:
-        print(f'Missing colors.{mode}')
+for path in sys.argv[1:]:
+    with open(path) as stream:
+        data = json.load(stream)
+    required = ["domain", "colors", "typography", "shape", "motion", "shadows"]
+    missing = [k for k in required if k not in data]
+    if missing:
+        print(f"{path}: missing keys: {missing}")
         sys.exit(1)
-"
-done
+    for mode in ["light", "dark"]:
+        if mode not in data["colors"]:
+            print(f"{path}: missing colors.{mode}")
+            sys.exit(1)
+' "$SKILL_ROOT"/assets/tokens/domain-tokens/*.json
 
 # =============================================================================
 # CATEGORY 9: SKILL.MD FRONTMATTER CHECK (1 check)

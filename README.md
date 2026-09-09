@@ -83,7 +83,7 @@ If you are evaluating this as AI tooling work, start with the constraint system,
 2. Open `domain-map.json` and compare two distant domains, such as fintech and creative. The point is not a nicer palette. The point is a different design grammar.
 3. Read `references/anti-patterns.md` to see the failure modes the skill is designed to kill.
 4. Inspect `templates/web/saas-app.tsx`, `templates/web/landing-page.html`, and `templates/mobile/compose-app.kt` to see how tokens become implementation pressure.
-5. Run `bash scripts/validate-skill.sh`. The 178 checks are there because aesthetic systems still need boring structural guarantees.
+5. Run `bash scripts/validate-skill.sh`. The 161 checks are there because aesthetic systems still need boring structural guarantees.
 
 ## Install
 
